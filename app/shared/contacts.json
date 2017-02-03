@@ -1,0 +1,28 @@
+{
+    "contacts": [{
+            "id": 1,
+            "firstName": "Иосиф",
+            "lastName": "Попрыгун",
+            "gender": "man",
+            "phone": "72566898599",
+            "email": "hello@mail.com"
+
+        },
+        {
+            "id": 2,
+            "firstName": "Смурфик",
+            "lastName": "Синеглазик",
+            "gender": "man",
+            "phone": "72566898599",
+            "email": "hello@mail.com"
+        },
+        {
+            "id": 3,
+            "firstName": "Бельчонок",
+            "lastName": "Пушистик",
+            "gender": "woman",
+            "phone": "72566898599",
+            "email": "hello@mail.com"
+        }
+    ]
+}
