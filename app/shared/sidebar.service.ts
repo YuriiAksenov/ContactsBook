@@ -17,7 +17,7 @@ export class DeltaContact {
 export class SidebarService{
     deltaContacts: DeltaContact[] = [new DeltaContact(0, null, "none")];
 
-    contacts: IContact[]=contacts;
+    contacts: IContact[]=JSON.parse(localStorage.getItem("ContactsBook.contacts"));
     checkCount: number = 0;
     matchedCount: number = this.contacts.length;
     isAllChecked: boolean = false;
@@ -34,6 +34,9 @@ export class SidebarService{
         //     contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
         //     error => {console.log(error); }
         // );
+        //localStorage.setItem("ContactsBook.contacts",JSON.stringify(this.contacts));
+        
+        
         this.contactsSort();
         return this.contacts;
     }
