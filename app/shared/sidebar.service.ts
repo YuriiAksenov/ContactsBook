@@ -34,7 +34,7 @@ export class SidebarService{
         //     contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
         //     error => {console.log(error); }
         // );
-        
+        this.contactsSort();
         return this.contacts;
     }
 
