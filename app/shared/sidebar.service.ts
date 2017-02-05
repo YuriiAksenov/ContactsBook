@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
+import { Response} from '@angular/http';
 
 import { IContact } from "./contact.model";
 import { contacts } from "./contact.data";
@@ -13,7 +14,7 @@ export class DeltaContact {
 
 
 @Injectable()
-export class SidebarService {
+export class SidebarService{
     deltaContacts: DeltaContact[] = [new DeltaContact(0, null, "none")];
 
     contacts: IContact[]=[];
@@ -25,13 +26,20 @@ export class SidebarService {
     localLanguage: string = "ENG";
 
     constructor(private dataService: DataService){ 
+        console.log("1");
+        console.log(dataService);
+        dataService.getContacts().subscribe(
+            contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
+            error => {console.log(error); }
+        );
     }
+    
 
      getContacts(): IContact[] {
+        console.log("2");
         
-        this.contacts=this.dataService.getContacts();
 
-        this.contactsSort();
+        console.log(this.contacts);
         return this.contacts;
     }
 

@@ -32,4 +32,7 @@ import { FilterSearchPipe } from './filter-search.pipe';
   providers: [DataService, SidebarService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  
+}
