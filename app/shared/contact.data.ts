@@ -29,6 +29,26 @@ export const contacts = [
             gender: "woman",
             phone: "72566898599",
             email: "hello@mail.com"
+        },
+        {
+            id: 4,
+            choosen: false,
+            matched: true,
+            firstName: "Шарик",
+            lastName: "Иподромов",
+            gender: "man",
+            phone: "72566898599",
+            email: "hello@mail.com"
+        },
+        {
+            id: 5,
+            choosen: false,
+            matched: true,
+            firstName: "Ариэль",
+            lastName: "Герц",
+            gender: "woman",
+            phone: "72566898599",
+            email: "hello@mail.com"
         }
     
 ]

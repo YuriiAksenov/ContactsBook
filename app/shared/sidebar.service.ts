@@ -17,7 +17,7 @@ export class DeltaContact {
 export class SidebarService{
     deltaContacts: DeltaContact[] = [new DeltaContact(0, null, "none")];
 
-    contacts: IContact[]=[];
+    contacts: IContact[]=contacts;
     checkCount: number = 0;
     matchedCount: number = this.contacts.length;
     isAllChecked: boolean = false;
@@ -25,21 +25,16 @@ export class SidebarService{
 
     localLanguage: string = "ENG";
 
-    constructor(private dataService: DataService){ 
-        console.log("1");
-        console.log(dataService);
-        dataService.getContacts().subscribe(
-            contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
-            error => {console.log(error); }
-        );
+    constructor(private dataService: DataService){         
     }
     
 
      getContacts(): IContact[] {
-        console.log("2");
+        //  dataService.getContacts().subscribe(
+        //     contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
+        //     error => {console.log(error); }
+        // );
         
-
-        console.log(this.contacts);
         return this.contacts;
     }
 
