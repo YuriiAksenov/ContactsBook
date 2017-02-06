@@ -35,7 +35,7 @@ export class AppComponent implements OnDestroy{
 
      
 ngOnDestroy(){
-    alert("Hello");
+    console.log("Hello");
 }
 
     deltaChanges: DeltaChangesItem[] = [new DeltaChangesItem(0, null, "none")];

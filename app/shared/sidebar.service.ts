@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Response} from '@angular/http';
+import { Response } from '@angular/http';
 
 import { IContact } from "./contact.model";
 import { contacts } from "./contact.data";
@@ -14,10 +14,10 @@ export class DeltaContact {
 
 
 @Injectable()
-export class SidebarService{
+export class SidebarService {
     deltaContacts: DeltaContact[] = [new DeltaContact(0, null, "none")];
 
-    contacts: IContact[]=JSON.parse(localStorage.getItem("ContactsBook.contacts"));
+    contacts: IContact[] = JSON.parse(localStorage.getItem("ContactsBook.contacts")); //ВЫнести в отдельный сервис, чтобы были отдельные методы для получения записи и проверки. СДелать подобие БД в сервисе с localstorage.
     checkCount: number = 0;
     matchedCount: number = this.contacts.length;
     isAllChecked: boolean = false;
@@ -25,29 +25,29 @@ export class SidebarService{
 
     localLanguage: string = "ENG";
 
-    constructor(private dataService: DataService){         
+    constructor(private dataService: DataService) {
     }
-    
 
-     getContacts(): IContact[] {
+
+    getContacts(): IContact[] {
         //  dataService.getContacts().subscribe(
         //     contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
         //     error => {console.log(error); }
         // );
         //localStorage.setItem("ContactsBook.contacts",JSON.stringify(this.contacts));
-        
-        
+
+
         this.contactsSort();
         return this.contacts;
     }
 
 
-    getLocalLanguage():string {
+    getLocalLanguage(): string {
         return this.localLanguage;
     }
 
-   
-    search(searchText: string): void  {
+
+    search(searchText: string): void {
         this.searchText = searchText;
         this.checkCount = 0;
         this.isAllChecked = false;
@@ -57,7 +57,7 @@ export class SidebarService{
         });
     }
 
-    isContactMatched(contact: IContact): void  {
+    isContactMatched(contact: IContact): void {
         if (this.searchText === '' || this.searchText === undefined || this.searchText === null) {
             if (!contact.matched) this.matchedCount++;
             contact.matched = true;
@@ -106,11 +106,11 @@ export class SidebarService{
 
     mailContact(contact: IContact): void { }
 
-    mailMatchedContacts(): void  { }
+    mailMatchedContacts(): void { }
 
     phoneContact(contact: IContact): void { }
 
-    phoneMatchedContacts(): void  { }
+    phoneMatchedContacts(): void { }
 
     deleteContact(contact: IContact): void {
         if (confirm("Do you want to delete " + contact.firstName + " " + contact.lastName + "?")) {
@@ -147,9 +147,12 @@ export class SidebarService{
     }
 
 
+    groupMatchedContacts() {
+
+    }
 
 
-    undoChangedContact(): void  {
+    undoChangedContact(): void {
         this.search("");
 
 
@@ -171,7 +174,7 @@ export class SidebarService{
     }
 
 
-    contactsSort(): void  {
+    contactsSort(): void {
         this.contacts.sort((a: IContact, b: IContact) => {
             if (a.lastName === b.lastName) {
                 if (a.firstName > b.firstName) return 1;

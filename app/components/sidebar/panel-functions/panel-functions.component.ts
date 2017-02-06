@@ -11,16 +11,16 @@ import { SidebarService } from "../../../shared/sidebar.service";
     templateUrl: 'panel-functions.component.html',
     styleUrls: ['panel-functions.component.css']
 })
-export class PanelFunctionsComponent implements OnInit{
+export class PanelFunctionsComponent implements OnInit {
     searchText: string = "";
     localLanguage: string;
 
     constructor(private sidebarService: SidebarService) {
-        this.localLanguage ="";
+        this.localLanguage = "";
     }
 
-    ngOnInit(){
-        this.localLanguage=this.sidebarService.getLocalLanguage();
+    ngOnInit() {
+        this.localLanguage = this.sidebarService.getLocalLanguage();
     }
 
     onCheckAllContacts() {
@@ -36,26 +36,37 @@ export class PanelFunctionsComponent implements OnInit{
     }
 
     onClose() {
-        this.searchText="";
+        this.searchText = "";
         this.sidebarService.search(this.searchText);
     }
 
-    onUndoChangedContact(){
+    onUndoChangedContact() {
         this.searchText = "";
         this.sidebarService.undoChangedContact();
     }
 
-    onMailMatchedContacts(){
+    onMailMatchedContacts() {
         this.sidebarService.mailMatchedContacts();
     }
 
-    onPhoneMatchedContacts(){
+    onPhoneMatchedContacts() {
         this.sidebarService.phoneMatchedContacts();
     }
 
-    onDeleteMatchedContacts(){
+    onGroupMatchedContacts() {
+        this.sidebarService.groupMatchedContacts();
+    }
+
+    onDeleteMatchedContacts() {
         this.sidebarService.deleteMatchedContacts();
     }
 
-    
+    onSortedByFirstNameMatchedContacts() {
+
+    }
+
+    onSortedByLastNameMatchedContacts() {
+
+    }
+
 }
