@@ -4,17 +4,7 @@
     </button>
 </div>
 
-<div class="function-item search-item">
-    <form class="search-form">
-        <input type="text" class="searching" name="search" [(ngModel)]="searchText" (ngModelChange)="onSearch()" placeholder="Search...">
-        <button class="btn search icon" (click)=onSearch()>
-            <i class="material-icons">search</i>
-        </button>
-        <button *ngIf="searchText" class="btn close icon" (click)=onClose()>
-            <i class="material-icons">close</i>
-        </button>
-    </form>
-</div>
+
 
 <!--<span>{{ true ? 'Контакты' : 'Группы'}}</span>
 <button class="add icon" (click)="addContact()">
@@ -65,4 +55,16 @@
     <button class="btn add icon" (click)="addContact()">
         <i class="material-icons">add</i>
     </button>
+</div>
+
+<div class="function-item search-item">
+    <form class="search-form">
+        <input type="text" class="searching" name="search" [(ngModel)]="searchText" (ngModelChange)="onSearch()" placeholder="Search...">
+        <button class="btn search icon" (click)=onSearch()>
+            <i class="material-icons">search</i>
+        </button>
+        <button *ngIf="searchText" class="btn close icon" (click)=onClose()>
+            <i class="material-icons">close</i>
+        </button>
+    </form>
 </div>

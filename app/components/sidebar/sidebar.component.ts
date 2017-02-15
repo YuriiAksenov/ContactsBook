@@ -7,7 +7,7 @@ import { Contact, IContact } from '../../shared/contact.model';
     moduleId: module.id,
     selector: 'sidebar',
     templateUrl: 'sidebar.component.html',
-    styleUrls: ['../../../styles.css', 'sidebar.component.css']
+    styleUrls: ['sidebar.component.css']
 })
 export class SidebarComponent {
     

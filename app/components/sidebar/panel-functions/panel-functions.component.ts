@@ -1,3 +1,7 @@
+//TODO
+//Сделать чтобы появление доп меню не залеало за край экрана, то есть сделать с js
+//http://plnkr.co/edit/CEYfQIQmvQO45sEveChc?p=preview
+
 import { Component, OnInit } from '@angular/core'
 
 
