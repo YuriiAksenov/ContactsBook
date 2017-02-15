@@ -12,6 +12,9 @@ import { SidebarService } from "../../../shared/sidebar.service";
     styleUrls: ['panel-functions.component.css']
 })
 export class PanelFunctionsComponent implements OnInit {
+    isFirstNameSortedUp:boolean =true;
+    isLastNameSortedUp:boolean=true;
+    
     searchText: string = "";
     localLanguage: string;
 
@@ -61,12 +64,16 @@ export class PanelFunctionsComponent implements OnInit {
         this.sidebarService.deleteMatchedContacts();
     }
 
-    onSortedByFirstNameMatchedContacts() {
-
+    onSortFirstNameContactsUp() {
+        this.sidebarService.sortFirstNameContactsUp(this.isFirstNameSortedUp);
+        this.isFirstNameSortedUp = !this.isFirstNameSortedUp;
+        this.isLastNameSortedUp = true;
     }
 
-    onSortedByLastNameMatchedContacts() {
-
+    onSortLastNameContactsUp() {
+        this.sidebarService.sortLastNameContactsUp(this.isLastNameSortedUp);
+        this.isLastNameSortedUp = !this.isLastNameSortedUp;
+        this.isFirstNameSortedUp = true;
     }
 
 }

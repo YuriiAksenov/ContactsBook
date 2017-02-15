@@ -11,7 +11,7 @@ import { SidebarService } from '../../../shared/sidebar.service';
     styleUrls: ['contacts-list.component.css']
 })
 export class ContactsListComponent implements OnInit {
-    contacts: IContact[];
+     contacts: IContact[];
 
     constructor(private sidebarService:SidebarService){
         this.contacts=[];
@@ -21,7 +21,9 @@ export class ContactsListComponent implements OnInit {
         // this.sidebarService.getContacts().subscribe(
         //     (contacts) => this.contacts=contacts,
         //     error => { this.error=error; console.log(error);});
+        
         this.contacts=this.sidebarService.getContacts();
+        //this.sidebarService.getContacts().subscribe((data:any)=>this.contacts=data);
     }
 
     checkContact(contact: IContact): void {

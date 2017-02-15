@@ -46,12 +46,12 @@
             <p>{{ localLanguage === "RUS" ? 'Добавить контактов в группу' : 'Add checked contacts in group'}}</p>
         </button>
 
-        <button class="sub-panel-item sort-firstname-sub-item" (click)="onSortedByFirstNameMatchedContacts()">
-            <p>{{ localLanguage === "RUS" ? 'Сортировать по имени' : 'Sorted list by firstname'}}<i class="material-icons icon">undo</i></p>
+        <button class="sub-panel-item sort-secondname-sub-item" (click)="onSortLastNameContactsUp()">
+            <p>{{ localLanguage === "RUS" ? 'Сортировать по фамилии' : 'Sorted list by lastname'}}</p>
         </button>
 
-        <button class="sub-panel-item sort-secondname-sub-item" (click)="onSortedByLastNameMatchedContacts()">
-            <p>{{ localLanguage === "RUS" ? 'Сортировать по фамилии' : 'Sorted list by lastname'}}</p>
+        <button class="sub-panel-item sort-firstname-sub-item" (click)="onSortFirstNameContactsUp()">
+            <p>{{ localLanguage === "RUS" ? 'Сортировать по имени' : 'Sorted list by firstname'}}<i class="material-icons icon">undo</i></p>
         </button>
 
         <button class="sub-panel-item delete-sub-item" (click)="onDeleteMatchedContacts()">

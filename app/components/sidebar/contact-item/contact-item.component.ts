@@ -3,6 +3,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IContact } from '../../../shared/contact.model';
 import { DisplayDirective } from '../../../shared/display.directive';
 
+import { Observable } from 'rxjs/Observable';
+
+const Rx = require('rxjs/Rx');
+
+
+
 @Component({
     moduleId: module.id,
     selector: 'contact-item',
@@ -16,6 +22,7 @@ export class ContactItemComponent {
     @Output() mailContact = new EventEmitter<IContact>();
     @Output() phoneContact = new EventEmitter<IContact>();
     @Output() deleteContact = new EventEmitter<IContact>();
+
 
     //Отметить контакт
     onCheckContact(): void {
