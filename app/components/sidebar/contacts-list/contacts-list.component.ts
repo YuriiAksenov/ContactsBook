@@ -22,7 +22,8 @@ export class ContactsListComponent implements OnInit {
         //     (contacts) => this.contacts=contacts,
         //     error => { this.error=error; console.log(error);});
         
-        this.contacts=this.sidebarService.getContacts();
+        //this.contacts=this.sidebarService.getContacts();
+        this.sidebarService.getContacts().subscribe(contacts => this.contacts = contacts);
         //this.sidebarService.getContacts().subscribe((data:any)=>this.contacts=data);
     }
 

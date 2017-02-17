@@ -1,18 +1,18 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 
-// import { Observable } from 'rxjs/Observable';
-// import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+//import 'rxjs/add/operator/fromPromise';
 // import 'rxjs/add/operator/catch';
 // import 'rxjs/add/observable/throw';
-// import 'rxjs/Rx';
+import 'rxjs/Rx';
 
 
-import { IContact } from "./contact.model";
+import { IContact, Contact } from "./contact.model";
 import { contacts } from "./contact.data";
 
 
-import { DataService } from "./data.service";
+import { MainService } from "./main.service";
 
 export class DeltaContact {
 
@@ -24,41 +24,43 @@ export class DeltaContact {
 export class SidebarService {
     deltaContacts: DeltaContact[] = [new DeltaContact(0, null, "none")];
 
-    contacts: IContact[] = []; //ВЫнести в отдельный сервис, чтобы были отдельные методы для получения записи и проверки. СДелать подобие БД в сервисе с localstorage.
+    contacts: Contact[] = []; //ВЫнести в отдельный сервис, чтобы были отдельные методы для получения записи и проверки. СДелать подобие БД в сервисе с localstorage.
     checkCount: number = 0;
-    matchedCount: number = this.contacts.length;
+    matchedCount: number;
     isAllChecked: boolean = false;
     searchText: string = "";
 
     localLanguage: string = "ENG";
 
-    constructor(private dataService: DataService) {
+    constructor(private mainService: MainService) {
+        //this.contacts = JSON.parse(localStorage.getItem("ContactsBook.contacts"));;
     }
 
 
-    getContacts(): IContact[] {
-        //  dataService.getContacts().subscribe(
-        //     contacts=> {this.contacts=contacts;console.log(contacts); console.log(this.contacts); },
-        //     error => {console.log(error); }
-        // );
-        //localStorage.setItem("ContactsBook.contacts",JSON.stringify(this.contacts));
-        this.contacts=JSON.parse(localStorage.getItem("ContactsBook.contacts"));;
-        
-        this.contactsSort();
-        
-        //return Observable.from<IContact[]>(this.contacts);
-        return this.contacts;
-
+    getContacts(): Observable<Contact[]> {
+        console.log(this.contacts);
+        console.log("second from sidebar service");
+        return Observable.from<Contact[]>(
+            Observable.fromPromise(
+                this.mainService.getContacts()
+                    .then(contacts => {
+                        this.contacts = contacts;
+                        this.contactsSort();
+                        return contacts;
+                    }
+                    )
+            )
+        );
     }
 
-//Получение Локльного языка, чтобы в функция был или англ по умолчанию или руссский
+    //Получение Локльного языка, чтобы в функция был или англ по умолчанию или руссский
     getLocalLanguage(): string {
         return this.localLanguage;
     }
 
-// функция поиска
-//если работает функция поиска то она тменяет выделение все котактов. и в переборе по массиву контактов она 
-//всех делает не выбранными и смотрит совпадение введенного текста и полей контакта с помощью дополнительно вызываемой функции проверки
+    // функция поиска
+    //если работает функция поиска то она тменяет выделение все котактов. и в переборе по массиву контактов она 
+    //всех делает не выбранными и смотрит совпадение введенного текста и полей контакта с помощью дополнительно вызываемой функции проверки
     search(searchText: string): void {
         this.searchText = searchText;
         this.checkCount = 0;
@@ -69,7 +71,7 @@ export class SidebarService {
         });
     }
 
-//функци смотри совпадение введенного значения в поиск и полей контакта
+    //функци смотри совпадение введенного значения в поиск и полей контакта
     isContactMatched(contact: IContact): void {
         if (this.searchText === '' || this.searchText === undefined || this.searchText === null) {
             if (!contact.matched) this.matchedCount++;
@@ -91,8 +93,8 @@ export class SidebarService {
         return;
     }
 
-//функция отмечает контакт выбранным, делает его выбранным. и если контакт становится выбранным то увеличивается счетчик выбранных контактов, 
-//иначе счетчки уменьшается. Если их количество равно количество всего массива или количеству совпадающих по поиску то логическое свойство отмеченны все true
+    //функция отмечает контакт выбранным, делает его выбранным. и если контакт становится выбранным то увеличивается счетчик выбранных контактов, 
+    //иначе счетчки уменьшается. Если их количество равно количество всего массива или количеству совпадающих по поиску то логическое свойство отмеченны все true
     checkContact(contact: IContact): void {
         contact.choosen = !contact.choosen;
         contact.choosen ? this.checkCount++ : this.checkCount--;
@@ -102,8 +104,8 @@ export class SidebarService {
             this.isAllChecked = false;
         }
     }
-//функция отмечает все контакты или снимает выделение всех контактов
-//если количестов выбранных совпадает с линой всего массива или количеством совпадающих, то тогда все убираются, иначе каждый совпадающий становится выбранным и все становится выбранным
+    //функция отмечает все контакты или снимает выделение всех контактов
+    //если количестов выбранных совпадает с линой всего массива или количеством совпадающих, то тогда все убираются, иначе каждый совпадающий становится выбранным и все становится выбранным
     checkAllContacts(): boolean {
         if (this.checkCount === this.contacts.length || this.checkCount === this.matchedCount) {
             this.contacts.forEach(element => { element.choosen = !element.choosen; });
@@ -119,19 +121,19 @@ export class SidebarService {
         }
     }
 
-//отправить письмо контакту
+    //отправить письмо контакту
     mailContact(contact: IContact): void { }
-//отправить письмо выбранным котактам
+    //отправить письмо выбранным котактам
     mailMatchedContacts(): void { }
-//позвониить контакты
+    //позвониить контакты
     phoneContact(contact: IContact): void { }
-//позваонить выьранным котактам
+    //позваонить выьранным котактам
     phoneMatchedContacts(): void { }
-//удалить контакта
-//когла происзодит удаление ктотакта, спрева полтзователя просят подтвердить, далее просматривается весь массив, если у элемента массива совпадает id то далее контакт помещается в массив изменений
-//если котнакт был выбран то количество выбранных уменьшаетя и количество совпдающих тоже становится меньше. и потом из самого массива контактов удаляется этот контакт. 
-//если количество выбранный становится 0, то совйство все ли выбраны становится false
-//происходит выход их цикла, чтобы не проверять весь остальной массив.
+    //удалить контакта
+    //когла происзодит удаление ктотакта, спрева полтзователя просят подтвердить, далее просматривается весь массив, если у элемента массива совпадает id то далее контакт помещается в массив изменений
+    //если котнакт был выбран то количество выбранных уменьшаетя и количество совпдающих тоже становится меньше. и потом из самого массива контактов удаляется этот контакт. 
+    //если количество выбранный становится 0, то совйство все ли выбраны становится false
+    //происходит выход их цикла, чтобы не проверять весь остальной массив.
     deleteContact(contact: IContact): void {
         if (confirm("Do you want to delete " + contact.firstName + " " + contact.lastName + "?")) {
             for (let i = 0; i < this.contacts.length; i++) {
@@ -148,7 +150,7 @@ export class SidebarService {
             }
         }
     }
-//удаление выбанных контактов
+    //удаление выбанных контактов
     deleteMatchedContacts(): void {
         if (confirm("Do you want to delete ALL CHECKED CONTACTS ?")) {
             while (this.checkCount !== 0) {
@@ -165,12 +167,12 @@ export class SidebarService {
         }
     }
 
-//сгруппировать выбранные контакты
+    //сгруппировать выбранные контакты
     groupMatchedContacts() {
 
     }
-//сортирует по имень все контакты. 
-//Если параметр имеет значение true то по убыванию, иначе по возрастанию
+    //сортирует по имень все контакты. 
+    //Если параметр имеет значение true то по убыванию, иначе по возрастанию
     sortFirstNameContactsUp(firstNameSortedUp: boolean = true) {
         if (!firstNameSortedUp) {
             this.contacts.sort((a: IContact, b: IContact) => {
@@ -217,10 +219,10 @@ export class SidebarService {
 
 
 
-//функция отмены последнего действия. 
-//1) она убирает поиск, 2) если ыли изменения, то она берет последнее изменение и смотрит, если это было удаление, 
-//то она помещает в массив контактов, так как параметр поиска обнулился, то количество совпадающих становится равно длине массива контактов
-//и потом удаляется из массива изменений послений пункт, то есть всё возвращается на круги своя
+    //функция отмены последнего действия. 
+    //1) она убирает поиск, 2) если ыли изменения, то она берет последнее изменение и смотрит, если это было удаление, 
+    //то она помещает в массив контактов, так как параметр поиска обнулился, то количество совпадающих становится равно длине массива контактов
+    //и потом удаляется из массива изменений послений пункт, то есть всё возвращается на круги своя
     undoChangedContact(): void {
         this.search("");
 
@@ -237,12 +239,12 @@ export class SidebarService {
         }
         this.contactsSort();
     }
-//функция отправляет в массив изменений новое изменение 
+    //функция отправляет в массив изменений новое изменение 
     deltaContactPush(deltaContact: IContact, deltaReport: string): void {
         this.deltaContacts.push(new DeltaContact(1, deltaContact, deltaReport));
     }
 
-//сортировка контактов сначала по фамилии потом по имени от А до Я
+    //сортировка контактов сначала по фамилии потом по имени от А до Я
     contactsSort(): void {
         this.contacts.sort((a: IContact, b: IContact) => {
             if (a.lastName === b.lastName) {

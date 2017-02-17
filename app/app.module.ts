@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
 import { HttpModule } from '@angular/http';
+
+// Imports for loading & configuring the in-memory web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './shared/in-memory-data.service';
+
 
 import { AppComponent } from './app.component';
 /*
@@ -20,7 +24,7 @@ import { MiddleComponent } from './components/middle/middle.component';
 import { ContactFormComponent } from './components/middle/contact-form/contact-form.component';
 
 
-import { DataService } from './shared/data.service';
+import { MainService } from './shared/main.service';
 import { SidebarService } from './shared/sidebar.service';
 import { DisplayDirective } from './shared/display.directive';
 
@@ -28,7 +32,12 @@ import { DisplayDirective } from './shared/display.directive';
 import { FilterSearchPipe } from './filter-search.pipe';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService)
+  ],
   declarations: [
     AppComponent,
     DisplayDirective,
@@ -40,7 +49,7 @@ import { FilterSearchPipe } from './filter-search.pipe';
     ContactsListComponent,
     ContactItemComponent,
     FilterSearchPipe],
-  providers: [DataService, SidebarService],
+  providers: [MainService, SidebarService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

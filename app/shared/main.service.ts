@@ -1,19 +1,41 @@
 import { Injectable } from '@angular/core';
+import { IContact } from "./contact.model";
 import { Http } from '@angular/http'
 import { Response } from '@angular/http'
 
 
+
 import { Contact } from "./contact.model";
-import { contacts } from "./contact.data";
 
 @Injectable()
-export class DataService {
+export class MainService {
 
-
+  private apiUrl = 'api/contacts';
+  contacts: Contact[] = [];
 
   constructor(private http: Http) { }
 
-getContactsFromLocalStorage() {
+  getContacts(): Promise<Contact[]> {
+    console.log("first  from main service")
+    return this.http.get(this.apiUrl)
+      .toPromise()
+      .then(res => res.json().data)
+      .then(contacts => { console.log(contacts);  
+        return this.contacts = contacts;})
+      .catch(this.handleError);
+      
+  }
+
+  // getContacts(){
+  //   return contacts;
+  // }
+
+  private handleError(error: any) {
+    console.error('Произошла ошибка', error);
+    return Promise.reject(error.message || error);
+  }
+
+  getContactsFromLocalStorage() {
 
   }
 
@@ -41,7 +63,7 @@ getContactsFromLocalStorage() {
   // }
 
 
-  
+
 
 }
 function supports_html5_storage() {
